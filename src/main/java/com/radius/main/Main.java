@@ -6,6 +6,7 @@
 
 package com.radius.main;
 
+import com.radius.scheduler.MainScheduler;
 import com.radius.util.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,12 +24,12 @@ public class Main {
     
     public static void main(String... args){
         Jrad jrad = null;
-        Map props = new HashMap();
-        props.put("org.glassfish.ejb.embedded.glassfish.configuration.file", "C:\\Documents and Settings\\gkrosnicki\\Moje dokumenty\\NetBeansProjects\\Jradius\\domain.xml");
+       
         EJBContainer container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         logger.info("Container "+container);
         try {
-            jrad = (Jrad)container.getContext().lookup("java:global/classes/Jrad");
+            //jrad = (Jrad)container.getContext().lookup("java:global/classes/Jrad");
+            jrad = (Jrad)container.getContext().lookup("java:global/Jradius-1.0-SNAPSHOT/Jrad");
             System.out.println("jrad found "+jrad);
             
         } catch (NamingException ex) {
@@ -36,7 +37,8 @@ public class Main {
             logger.error("Can't create jrad object "+ex);
         }
         jrad.init();
-        
+        MainScheduler mainScheduler = new MainScheduler();
+        new Thread(mainScheduler).start();
         //jrad.start();
     }
 }

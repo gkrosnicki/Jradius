@@ -39,12 +39,9 @@ public class ConfigSource {
     public int getAccport() {
         return accport;
     }
-
-    
-
-            
+       
     public void startConfig() throws IOException{
-            properties.load(new FileInputStream("init.properties"));
+            properties.load(new FileInputStream("/home/serwis/jradius_next/init.properties"));
             authenticate = Boolean.parseBoolean(properties.getProperty("authenticate"));
             accounting = Boolean.parseBoolean(properties.getProperty("accounting"));
             authport = Integer.parseInt(properties.getProperty("authport"));
